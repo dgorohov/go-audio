@@ -1,0 +1,12 @@
+[submodule "lib/libvorbis"]
+	path = lib/libvorbis
+	url = git@github.com:xiph/vorbis.git
+[submodule "lib/libflac"]
+	path = lib/libflac
+	url = git@github.com:xiph/flac.git
+[submodule "lib/liblame"]
+	path = lib/liblame
+	url = git@github.com:gypified/libmp3lame.git
+[submodule "lib/libogg"]
+	path = lib/libogg
+	url = git@github.com:xiph/ogg.git
