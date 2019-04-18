@@ -1,7 +1,7 @@
 current_dir  := $(shell pwd)
 build_dir	 := $(addsuffix /build,$(current_dir))
 
-codecs		 := libogg libvorbis libflac liblame libsoundio
+codecs		 := libogg libvorbis libflac libmad libsoundio
 
 clean_codecs := $(addsuffix clean,$(codecs))
 make_codecs  := $(addsuffix make,$(codecs))
@@ -38,12 +38,18 @@ libflacbuild:
 			--disable-xmms-plugin \
 			--disable-examples
 
-liblamebuild:
+libmadbuild:
 	cd $(patsubst %build,%,$@) && \
-		./configure --enable-nasm \
-			--disable-gtktest \
-			--disable-frontend \
-    		--prefix=$(build_dir)
+		patch -Np1 -i ../libmad-0.15.1b-fixes-1.patch
+	cd $(patsubst %build,%,$@) && pwd \
+		sed "s@AM_CONFIG_HEADER@AC_CONFIG_HEADERS@g" -i configure.ac && \
+		touch NEWS AUTHORS ChangeLog  && \
+		autoreconf -fi && \
+		./configure --prefix=$(build_dir) --disable-static
+
+libmadmake: libmadbuild
+	make -C $(patsubst %make,%,$@) && \
+		make -C $(patsubst %make,%,$@) install
 
 liboggbuild:
 	cd $(patsubst %build,%,$@) && \
@@ -64,9 +70,6 @@ libvorbisbuild:
 
 clean: $(build_dir)clean $(clean_codecs)
 	@echo "Done"
-
-liblameclean:
-	@echo "Skip clean"
 
 %clean: %
 	@echo Cleaning $<...

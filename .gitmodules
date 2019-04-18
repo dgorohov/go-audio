@@ -4,9 +4,9 @@
 [submodule "lib/libflac"]
 	path = lib/libflac
 	url = git@github.com:dgorohov/flac.git
-[submodule "lib/liblame"]
-	path = lib/liblame
-	url = git@github.com:dgorohov/libmp3lame.git
+[submodule "lib/libmad"]
+	path = lib/libmad
+	url = git@github.com:dgorohov/libmad.git
 [submodule "lib/libogg"]
 	path = lib/libogg
 	url = git@github.com:dgorohov/ogg.git

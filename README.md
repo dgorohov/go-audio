@@ -8,7 +8,7 @@ To create a golang bindings for the popular audio frameworks, like vorbis, flac,
 - libogg
 - libvorbis
 - libflac
-- liblame
+- libmad
 
 ## Prerequisites:
 - `pkg-config` to be installed
