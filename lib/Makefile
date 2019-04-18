@@ -1,7 +1,7 @@
 current_dir  := $(shell pwd)
 build_dir	 := $(addsuffix /build,$(current_dir))
 
-codecs		 := libogg libvorbis libflac liblame
+codecs		 := libogg libvorbis libflac liblame libsoundio
 
 clean_codecs := $(addsuffix clean,$(codecs))
 make_codecs  := $(addsuffix make,$(codecs))
@@ -13,6 +13,18 @@ $(build_dir):
 
 $(build_dir)clean: 
 	rm -rf $(build_dir)
+
+libsoundiobuild:
+	cd $(patsubst %build,%,$@) && \
+		mkdir -p build && cd build && \
+		cmake -DCMAKE_INSTALL_PREFIX:PATH=$(build_dir) ..
+
+libsoundiomake: libsoundiobuild
+	make -C $(patsubst %make,%,$@)/build && \
+		make -C $(patsubst %make,%,$@)/build install
+
+libsoundioclean:
+	rm -rf $(patsubst %clean,%,$@)/build
 
 libflacbuild:
 	cd $(patsubst %build,%,$@) && \
@@ -54,7 +66,7 @@ clean: $(build_dir)clean $(clean_codecs)
 	@echo "Done"
 
 liblameclean:
-	@echo "Skip clean as it doesn't exists in liblame"
+	@echo "Skip clean"
 
 %clean: %
 	@echo Cleaning $<...

@@ -10,3 +10,6 @@
 [submodule "lib/libogg"]
 	path = lib/libogg
 	url = git@github.com:dgorohov/ogg.git
+[submodule "lib/libsoundio"]
+	path = lib/libsoundio
+	url = git@github.com:dgorohov/libsoundio.git
